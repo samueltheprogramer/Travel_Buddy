@@ -11,7 +11,7 @@ const LocationDetails = () => {
       <StatusBar />
       <BackHeader />
       <LocationDetailsHeader locationDetailsData={locationDetailsData} />
-      <LocationDetailsBody locationDetailsData={locationDetailsData} />
+      <LocationDetailsBody locationDetailsData={locationDetailsData}/>
     </Container>
   );
 };

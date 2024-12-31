@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import { BackArrowIcon, HeartIcon, ShareIcon } from "../../../assets/svg";
-import { COLORS } from "../../constants";
+import { COLORS, FONTS } from "../../constants";
 import { mvs, s } from "react-native-size-matters";
 import { useNavigation } from "expo-router";
 
-const BackHeader = () => {
+const BackHeader = ({ isProfileScreen = false }) => {
   const navigation = useNavigation();
   return (
     <View style={styles.headerContainer}>
@@ -13,11 +13,19 @@ const BackHeader = () => {
         hitSlop={{ bottom: 20, left: 20, right: 20, top: 20 }}
         onPress={() => navigation.goBack()}
       >
-        <BackArrowIcon />
+        <BackArrowIcon fill={isProfileScreen ? "black" : "#FFFBFE"} />
       </TouchableOpacity>
       <View style={styles.heartAndShareIon}>
-        <ShareIcon />
-        <HeartIcon />
+        {isProfileScreen ? (
+          <TouchableOpacity>
+            <Text style={styles.signOutText}>Sign Out</Text>
+          </TouchableOpacity>
+        ) : (
+          <>
+            <ShareIcon />
+            <HeartIcon />
+          </>
+        )}
       </View>
     </View>
   );
@@ -36,6 +44,10 @@ const styles = StyleSheet.create({
     right: 0,
   },
   heartAndShareIon: { flexDirection: "row", gap: s(24) },
+  signOutText: {
+    ...FONTS.h6,
+    color: "red",
+  },
 });
 
 export default BackHeader;

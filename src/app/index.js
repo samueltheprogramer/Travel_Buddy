@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Auth, Destination, Home, LocationDetails, Profile } from "../screens";
 import CustomTabBar from "../navigations/CustomTabBar";
+import HappyJourny from "../screens/HappyJourny";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -58,6 +59,11 @@ const App = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="Auth" component={Auth} />
+      <Stack.Screen
+        name="HappyJourny"
+        component={HappyJourny}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };

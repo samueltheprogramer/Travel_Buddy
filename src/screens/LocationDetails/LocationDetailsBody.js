@@ -1,12 +1,22 @@
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import React, { useState } from "react";
 import { COLORS, FONTS } from "../../constants";
 import { mvs, s } from "react-native-size-matters";
 import CommonButton from "../../components/Button/CommonButton";
+import { useNavigation } from "@react-navigation/native";
 
 const LocationDetailsBody = ({ locationDetailsData }) => {
+  const navigation = useNavigation();
   const [selectedTab, setSelectedTab] = useState(1);
   const [showReadMore, setShowReadMore] = useState(false);
+  const [expandText, setExpandText] = useState(false);
   const handleTextLayout = (e) => {
     const { lines } = e.nativeEvent;
     if (lines.length > 3) {
@@ -18,9 +28,10 @@ const LocationDetailsBody = ({ locationDetailsData }) => {
 
   const handleContinue = () => {
     if (selectedTab === 3) {
-      return;
+      navigation.navigate("HappyJourny");
     } else {
       setSelectedTab(selectedTab + 1);
+      setExpandText(false);
     }
   };
   return (
@@ -102,7 +113,7 @@ const LocationDetailsBody = ({ locationDetailsData }) => {
           <View>
             <Text
               style={styles.details}
-              numberOfLines={3}
+              numberOfLines={expandText ? undefined : 3}
               onTextLayout={handleTextLayout}
             >
               {selectedTab === 1
@@ -113,19 +124,21 @@ const LocationDetailsBody = ({ locationDetailsData }) => {
                 ? locationDetailsData.activities.details
                 : null}
             </Text>
-            {showReadMore && (
-              <Text
-                style={{
-                  ...FONTS.body2,
-                  position: "absolute",
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: COLORS.primary,
-                  paddingRight: s(20),
-                }}
-              >
-                {"  "}... Read More
-              </Text>
+            {showReadMore && !expandText && (
+              <TouchableOpacity onPress={() => setExpandText(!expandText)}>
+                <Text
+                  style={{
+                    ...FONTS.body2,
+                    position: "absolute",
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: COLORS.primary,
+                    paddingRight: s(20),
+                  }}
+                >
+                  {"  "}... Read More
+                </Text>
+              </TouchableOpacity>
             )}
           </View>
         </View>

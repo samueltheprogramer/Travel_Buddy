@@ -16,6 +16,7 @@ const CommonButton = ({
   customButtonTextStyle,
   onPress = () => {},
   isContinueButton = false,
+  isBackButton = false,
 }) => {
   return (
     <TouchableOpacity
@@ -24,6 +25,7 @@ const CommonButton = ({
       onPress={onPress}
     >
       <View style={styles.buttonInnerView}>
+        {isBackButton && <BackArrowIcon />}
         <Text style={[styles.buttonText, customButtonTextStyle]}>
           {buttonText}
         </Text>
@@ -59,6 +61,8 @@ const styles = StyleSheet.create({
   buttonInnerView: {
     flexDirection: "row",
     gap: s(17),
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

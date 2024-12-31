@@ -35,6 +35,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
 
           return (
             <TouchableOpacity
+              hitSlop={{ left: 150, right: 150 }}
               key={index}
               onPress={onPress}
               style={[styles.tab, isFocused && { backgroundColor: "white" }]}
