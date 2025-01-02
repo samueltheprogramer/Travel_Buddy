@@ -195,15 +195,10 @@ const BackArrowIcon = (props) => (
 );
 
 const HeartIcon = (props) => (
-  <Svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={20}
-    height={18}
-    fill="none"
-    {...props}
-  >
+  <Svg xmlns="http://www.w3.org/2000/svg" width={20} height={18} fill="none">
     <Path
-      fill="#fff"
+      fill="white"
+      {...props}
       fillRule="evenodd"
       d="M15.32.22a6.49 6.49 0 0 1 4.5 4.55A5.83 5.83 0 0 1 18 10.53l-7.27 7.18a1 1 0 0 1-1.4 0L2 10.53A5.83 5.83 0 0 1 .18 4.77 6.49 6.49 0 0 1 4.68.22 6 6 0 0 1 10 1.31 6 6 0 0 1 15.32.22ZM10 15.6l6.63-6.5a3.81 3.81 0 0 0 1.17-3.84 4.51 4.51 0 0 0-3.1-3.11 4.11 4.11 0 0 0-4.08 1.2 1 1 0 0 1-1.4 0 4.3 4.3 0 0 0-3-1.35 3.81 3.81 0 0 0-1 .15 4.51 4.51 0 0 0-3.1 3.11A3.81 3.81 0 0 0 3.37 9.1L10 15.6Z"
       clipRule="evenodd"
@@ -243,6 +238,40 @@ const StarRatingIcon = (props) => (
   </Svg>
 );
 
+const GoogleIcon = (props) => (
+  <Svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={24}
+    height={24}
+    fill="none"
+    {...props}
+  >
+    <G clipPath="url(#a)">
+      <Path
+        fill="#4285F4"
+        d="M23.713 12.276c0-.816-.066-1.636-.207-2.438H12.187v4.62h6.482a5.554 5.554 0 0 1-2.399 3.647v2.999h3.867c2.271-2.09 3.576-5.177 3.576-8.828Z"
+      />
+      <Path
+        fill="#34A853"
+        d="M12.187 24c3.237 0 5.966-1.062 7.955-2.896l-3.867-2.998c-1.076.731-2.465 1.146-4.083 1.146-3.13 0-5.785-2.112-6.738-4.952h-3.99v3.091a12.002 12.002 0 0 0 10.723 6.61Z"
+      />
+      <Path
+        fill="#FBBC04"
+        d="M5.45 14.3a7.188 7.188 0 0 1 0-4.594V6.615H1.464a12.01 12.01 0 0 0 0 10.776l3.986-3.09Z"
+      />
+      <Path
+        fill="#EA4335"
+        d="M12.187 4.75a6.52 6.52 0 0 1 4.604 1.799l3.426-3.426A11.533 11.533 0 0 0 12.187 0 11.998 11.998 0 0 0 1.464 6.615l3.986 3.09c.948-2.843 3.607-4.955 6.737-4.955Z"
+      />
+    </G>
+    <Defs>
+      <ClipPath id="a">
+        <Path fill="#fff" d="M0 0h24v24H0z" />
+      </ClipPath>
+    </Defs>
+  </Svg>
+);
+
 export {
   LocationnIcon,
   SearchIcon,
@@ -259,4 +288,5 @@ export {
   HeartIcon,
   ShareIcon,
   StarRatingIcon,
+  GoogleIcon,
 };

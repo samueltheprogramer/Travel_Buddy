@@ -1,55 +1,43 @@
-import { View, Text, StyleSheet, Image, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  Touchable,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 import { BackHeader, Container } from "../../components";
 import { COLORS, FONTS } from "../../constants";
 import { mvs, s } from "react-native-size-matters";
 import { StarRatingIcon } from "../../../assets/svg";
 import { Ionicons } from "@expo/vector-icons";
-
-const data = [
-  {
-    location: "Dubai",
-    imageURL: "https://picsum.photos/seed/picsum/500/500",
-    rattings: "4.9",
-  },
-  {
-    location: "Dubai",
-    imageURL: "https://picsum.photos/seed/picsum/500/500",
-    rattings: "4.9",
-  },
-  {
-    location: "Dubai",
-    imageURL: "https://picsum.photos/seed/picsum/500/500",
-    rattings: "4.9",
-  },
-  {
-    location: "Dubai",
-    imageURL: "https://picsum.photos/seed/picsum/500/500",
-    rattings: "4.9",
-  },
-  {
-    location: "Dubai",
-    imageURL: "https://picsum.photos/seed/picsum/500/500",
-    rattings: "4.9",
-  },
-  {
-    location: "Dubai",
-    imageURL: "https://picsum.photos/seed/picsum/500/500",
-    rattings: "4.9",
-  },
-  {
-    location: "Dubai",
-    imageURL: "https://picsum.photos/seed/picsum/500/500",
-    rattings: "4.9",
-  },
-  {
-    location: "Dubai",
-    imageURL: "https://picsum.photos/seed/picsum/500/500",
-    rattings: "4.9",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFavorite } from "../../redux/searchBarDetailsSlice";
 
 const Profile = () => {
+  const dispatch = useDispatch();
+  const locationDetails = useSelector(
+    (state) => state.searchBarDetails.locationDetails
+  );
+  const flilterdLocationDetails = useSelector(
+    (state) => state.searchBarDetails.flilterdLocationDetails
+  );
+  const adLocationDetails = useSelector(
+    (state) => state.searchBarDetails.adLocationDetails
+  );
+  const favoriteLocationdeatils = locationDetails.filter(
+    (item) => item.isFavourite === true
+  );
+
+  const RemoveFavourite = (locationName) => {
+    console.log("first");
+    dispatch(toggleFavorite(locationName));
+  };
+
+  console.log("data --->", favoriteLocationdeatils);
+
   const renderFavouriteLocationItem = ({ item }) => {
     return (
       <View
@@ -74,7 +62,9 @@ const Profile = () => {
             </Text>
           </View>
         </View>
-        <Ionicons name="close" />
+        <TouchableOpacity onPress={() => RemoveFavourite(item.location)}>
+          <Ionicons name="close" />
+        </TouchableOpacity>
       </View>
     );
   };
@@ -104,9 +94,11 @@ const Profile = () => {
         </View>
       </View>
       <View style={styles.favouriteLocationView}>
-        <Text style={styles.favouriteHeaderTitle}>Favourite Locations</Text>
+        <Text style={styles.favouriteHeaderTitle}>
+          {`Favourite Locationsds (${favoriteLocationdeatils.length})`}
+        </Text>
         <FlatList
-          data={data}
+          data={favoriteLocationdeatils}
           renderItem={renderFavouriteLocationItem}
           contentContainerStyle={styles.CCS}
           ItemSeparatorComponent={<View style={{ height: mvs(10) }}></View>}

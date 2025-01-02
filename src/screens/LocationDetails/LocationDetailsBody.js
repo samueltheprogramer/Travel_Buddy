@@ -11,8 +11,18 @@ import { COLORS, FONTS } from "../../constants";
 import { mvs, s } from "react-native-size-matters";
 import CommonButton from "../../components/Button/CommonButton";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 
 const LocationDetailsBody = ({ locationDetailsData }) => {
+  const locationDetails = useSelector(
+    (state) => state.searchBarDetails.locationDetails
+  );
+  const flilterdLocationDetails = useSelector(
+    (state) => state.searchBarDetails.flilterdLocationDetails
+  );
+  const adLocationDetails = useSelector(
+    (state) => state.searchBarDetails.adLocationDetails
+  );
   const navigation = useNavigation();
   const [selectedTab, setSelectedTab] = useState(1);
   const [showReadMore, setShowReadMore] = useState(false);
@@ -71,11 +81,26 @@ const LocationDetailsBody = ({ locationDetailsData }) => {
             style={styles.image}
             source={
               selectedTab === 1
-                ? { uri: locationDetailsData.hotels.images[0] }
+                ? {
+                    uri:
+                      flilterdLocationDetails.length !== 0
+                        ? flilterdLocationDetails[0].hotels.images[0]
+                        : adLocationDetails.hotels.images[0],
+                  }
                 : selectedTab === 2
-                ? { uri: locationDetailsData.foods.images[0] }
+                ? {
+                    uri:
+                      flilterdLocationDetails.length !== 0
+                        ? flilterdLocationDetails[0].foods.images[0]
+                        : adLocationDetails.foods.images[0],
+                  }
                 : selectedTab === 3
-                ? { uri: locationDetailsData.activities.images[0] }
+                ? {
+                    uri:
+                      flilterdLocationDetails.length !== 0
+                        ? flilterdLocationDetails[0].activities.images[0]
+                        : adLocationDetails.activities.images[0],
+                  }
                 : null
             }
             resizeMode="stretch"
@@ -85,11 +110,26 @@ const LocationDetailsBody = ({ locationDetailsData }) => {
               style={styles.image}
               source={
                 selectedTab === 1
-                  ? { uri: locationDetailsData.hotels.images[1] }
+                  ? {
+                      uri:
+                        flilterdLocationDetails.length !== 0
+                          ? flilterdLocationDetails[0].hotels.images[1]
+                          : adLocationDetails.hotels.images[1],
+                    }
                   : selectedTab === 2
-                  ? { uri: locationDetailsData.foods.images[1] }
+                  ? {
+                      uri:
+                        flilterdLocationDetails.length !== 0
+                          ? flilterdLocationDetails[0].foods.images[1]
+                          : adLocationDetails.foods.images[1],
+                    }
                   : selectedTab === 3
-                  ? { uri: locationDetailsData.activities.images[1] }
+                  ? {
+                      uri:
+                        flilterdLocationDetails.length !== 0
+                          ? flilterdLocationDetails[0].activities.images[1]
+                          : adLocationDetails.activities.images[1],
+                    }
                   : null
               }
               resizeMode="stretch"
@@ -117,11 +157,17 @@ const LocationDetailsBody = ({ locationDetailsData }) => {
               onTextLayout={handleTextLayout}
             >
               {selectedTab === 1
-                ? locationDetailsData.hotels.details
+                ? flilterdLocationDetails.length !== 0
+                  ? flilterdLocationDetails[0].hotels.details
+                  : adLocationDetails.hotels.details
                 : selectedTab === 2
-                ? locationDetailsData.foods.details
+                ? flilterdLocationDetails.length !== 0
+                  ? flilterdLocationDetails[0].foods.details
+                  : adLocationDetails.foods.details
                 : selectedTab === 3
-                ? locationDetailsData.activities.details
+                ? flilterdLocationDetails.length !== 0
+                  ? flilterdLocationDetails[0].activities.details
+                  : adLocationDetails.activities.details
                 : null}
             </Text>
             {showReadMore && !expandText && (

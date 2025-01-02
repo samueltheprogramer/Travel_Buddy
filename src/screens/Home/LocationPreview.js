@@ -3,9 +3,22 @@ import React, { useState } from "react";
 import { mvs, s } from "react-native-size-matters";
 import { COLORS, FONTS } from "../../constants";
 import { DiscountBG, DiscountCouponIcon } from "../../../assets/svg";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  filterByLocationName,
+  resetFilter,
+} from "../../redux/searchBarDetailsSlice";
 
 const LocationPreview = () => {
+  const dispatch = useDispatch();
+  const flilterdLocationDetails = useSelector(
+    (state) => state.searchBarDetails.flilterdLocationDetails
+  );
+  const adLocationDetails = useSelector(
+    (state) => state.searchBarDetails.adLocationDetails
+  );
+
   const navigation = useNavigation();
   const [showReadMore, setShowReadMore] = useState(false);
   const handleTextLayout = (e) => {
@@ -16,6 +29,8 @@ const LocationPreview = () => {
       setShowReadMore(false);
     }
   };
+
+  console.log(adLocationDetails);
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("LocationDetails")}
@@ -25,7 +40,12 @@ const LocationPreview = () => {
       <View style={styles.location_image_card}>
         <Image
           style={styles.location_image}
-          source={{ uri: "https://picsum.photos/seed/picsum/500/500" }}
+          source={{
+            uri:
+              flilterdLocationDetails.length !== 0
+                ? flilterdLocationDetails[0]?.mainImage
+                : adLocationDetails?.mainImage,
+          }}
           resizeMode="stretch"
         />
         <View style={styles.discount_View}>
@@ -44,7 +64,11 @@ const LocationPreview = () => {
               // backgroundColor: "red",
             }}
           >
-            <Text style={styles.discountText}>68%</Text>
+            <Text style={styles.discountText}>
+              {flilterdLocationDetails.length !== 0
+                ? flilterdLocationDetails[0]?.discount
+                : adLocationDetails?.discount}
+            </Text>
             <DiscountCouponIcon />
           </View>
         </View>
@@ -78,10 +102,9 @@ const LocationPreview = () => {
             numberOfLines={4}
             onTextLayout={handleTextLayout}
           >
-            Thailand, one of Asia’s most popular travel destinations, has been
-            badly git a pandemic-induced tourim slump, with about 200,00
-            arrivals in the first 10 months of 2020, down 99.8% from 39.9
-            million in the
+            {flilterdLocationDetails.length !== 0
+              ? flilterdLocationDetails[0]?.details
+              : adLocationDetails?.details}
           </Text>
           {showReadMore && (
             <Text

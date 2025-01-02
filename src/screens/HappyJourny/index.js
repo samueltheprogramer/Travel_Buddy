@@ -1,18 +1,41 @@
-import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
 import { Container } from "../../components";
 import { COLORS, FONTS } from "../../constants";
 import { mvs, s } from "react-native-size-matters";
 import CommonButton from "../../components/Button/CommonButton";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
 
 const HappyJourny = () => {
   const navigation = useNavigation();
+  const [countdown, setCountdown] = useState(5); // Set initial countdown value
+  const searchDetails = useSelector(
+    (state) => state.searchBarDetails.searchDetails
+  );
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown((prevCountdown) => prevCountdown - 1);
+    }, 1000);
+
+    const timeout = setTimeout(() => {
+      navigation.navigate("Tabs"); // Redirect to Home after countdown
+    }, 5000);
+
+    return () => {
+      clearInterval(timer);
+      clearTimeout(timeout);
+    };
+  }, [navigation]);
+
   return (
     <Container style={styles.mainContainer}>
-      <Text numberOfLines={1} adjustsFontSizeToFit style={styles.headerText}>
-        Happy Journy
-      </Text>
+      <TouchableOpacity onPress={() => console.log(searchDetails)}>
+        <Text numberOfLines={1} adjustsFontSizeToFit style={styles.headerText}>
+          Happy Journy
+        </Text>
+      </TouchableOpacity>
       <View
         style={{
           borderWidth: mvs(1),
@@ -32,15 +55,22 @@ const HappyJourny = () => {
         <View>
           <View style={{ flexDirection: "row" }}>
             <Text style={{ width: s(60) }}>Location</Text>
-            <Text style={{}}>:{"   "}Dubai</Text>
+            <Text style={{}}>
+              :{"   "}
+              {searchDetails?.location}
+            </Text>
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={{ width: s(60) }}>Date</Text>
-            <Text style={{}}>:{"   "}July 08 - July 15</Text>
+            <Text style={{}}>
+              :{"   "} {searchDetails?.startDate} - {searchDetails?.endDate}
+            </Text>
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={{ width: s(60) }}>Guests</Text>
-            <Text style={{}}>:{"   "}3</Text>
+            <Text style={{}}>
+              :{"   "} {searchDetails?.guestsNo}
+            </Text>
           </View>
         </View>
       </View>
@@ -65,7 +95,7 @@ const HappyJourny = () => {
             ...FONTS.h1,
           }}
         >
-          5 s
+          {countdown}s
         </Text>
       </View>
       <CommonButton

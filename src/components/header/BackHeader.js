@@ -1,12 +1,38 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { BackArrowIcon, HeartIcon, ShareIcon } from "../../../assets/svg";
 import { COLORS, FONTS } from "../../constants";
 import { mvs, s } from "react-native-size-matters";
 import { useNavigation } from "expo-router";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFavorite } from "../../redux/searchBarDetailsSlice";
+import { Ionicons } from "@expo/vector-icons";
 
 const BackHeader = ({ isProfileScreen = false }) => {
+  const [isToggle, setIsToggle] = useState(false);
+  const dispatch = useDispatch();
+  const flilterdLocationDetails = useSelector(
+    (state) => state.searchBarDetails.flilterdLocationDetails
+  );
+  const adLocationDetails = useSelector(
+    (state) => state.searchBarDetails.adLocationDetails
+  );
+  const locationDetails = useSelector(
+    (state) => state.searchBarDetails.locationDetails
+  );
   const navigation = useNavigation();
+
+  const addFavourite = () => {
+    setIsToggle(!isToggle);
+    dispatch(
+      toggleFavorite(
+        flilterdLocationDetails.length !== 0
+          ? flilterdLocationDetails[0].location
+          : adLocationDetails.location
+      )
+    );
+  };
+  console.log("djvfjdvf", locationDetails);
   return (
     <View style={styles.headerContainer}>
       <TouchableOpacity
@@ -23,7 +49,9 @@ const BackHeader = ({ isProfileScreen = false }) => {
         ) : (
           <>
             <ShareIcon />
-            <HeartIcon />
+            <TouchableOpacity onPress={addFavourite}>
+              <HeartIcon fill={isToggle ? "red" : "white"} />
+            </TouchableOpacity>
           </>
         )}
       </View>

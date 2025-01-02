@@ -1,5 +1,11 @@
-import { View, Text, StyleSheet, TextInput } from "react-native";
-import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import React, { useState } from "react";
 import { mvs, s } from "react-native-size-matters";
 import { COLORS, FONTS } from "../../constants";
 import CommonButton from "../../components/Button/CommonButton";
@@ -12,7 +18,27 @@ import {
   SearchIcon,
 } from "../../../assets/svg";
 
+import DateTimePicker from "../../components/DatePicker";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  filterByLocationName,
+  setSearchDetails,
+} from "../../redux/searchBarDetailsSlice";
+
 const SearchBar = () => {
+  const dispatch = useDispatch();
+  const SD = useSelector((state) => state.searchBarDetails.startDate);
+  const ED = useSelector((state) => state.searchBarDetails.endDate);
+  const [location, setLocation] = useState("");
+  const [guestsNo, setGuestsNo] = useState(1);
+
+  const handleSearch = () => {
+    dispatch(
+      setSearchDetails({ location, startDate: SD, endDate: ED, guestsNo })
+    );
+    console.log(location);
+    dispatch(filterByLocationName(location));
+  };
   return (
     <View style={styles.mainContainer}>
       <View style={styles.inputField}>
@@ -22,6 +48,8 @@ const SearchBar = () => {
             placeholder="Location"
             placeholderTextColor={COLORS.black}
             style={styles.input}
+            value={location}
+            onChangeText={setLocation}
           />
         </View>
         <FilterIcon />
@@ -29,21 +57,44 @@ const SearchBar = () => {
       <View style={styles.inputField}>
         <View style={styles.innerView}>
           <CalenderIcon />
-          <Text style={styles.dateText}>July 08 - July 15 </Text>
+          <View
+            style={{ flexDirection: "row", gap: s(6), alignItems: "center" }}
+          >
+            <DateTimePicker isStartDate={true} />
+
+            <View
+              style={{
+                width: s(6),
+                height: mvs(1.5),
+                backgroundColor: "black",
+              }}
+            ></View>
+            <DateTimePicker isStartDate={false} />
+          </View>
         </View>
       </View>
       <View style={styles.inputField}>
         <View style={styles.innerView}>
           <GuestIcon />
-          <Text style={styles.dateText}>2 Guests </Text>
+          <Text style={styles.dateText}>{guestsNo} Guests </Text>
         </View>
         <View style={styles.innerView}>
-          <MinusIcon />
+          <TouchableOpacity
+            hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
+            onPress={() => setGuestsNo(guestsNo > 0 ? guestsNo - 1 : 0)}
+          >
+            <MinusIcon />
+          </TouchableOpacity>
           <View style={styles.divider}></View>
-          <PlusIcon />
+          <TouchableOpacity
+            hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
+            onPress={() => setGuestsNo(guestsNo + 1)}
+          >
+            <PlusIcon />
+          </TouchableOpacity>
         </View>
       </View>
-      <CommonButton buttonText={"Search"} />
+      <CommonButton buttonText={"Search"} onPress={handleSearch} />
     </View>
   );
 };

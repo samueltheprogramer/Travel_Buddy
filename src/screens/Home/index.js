@@ -11,6 +11,7 @@ import SearchBar from "./SearchBar";
 
 const Home = () => {
   const navigation = useNavigation();
+
   return (
     <Container style={styles.mainContainer}>
       <StatusBar style="auto" backgroundColor={COLORS.primary} />

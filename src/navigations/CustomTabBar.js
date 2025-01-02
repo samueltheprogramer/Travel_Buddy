@@ -80,7 +80,9 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
             }}
           ></View>
         </View>
-        <View
+        <TouchableOpacity
+          activeOpacity={0}
+          onPress={() => navigation.navigate("Auth")}
           style={{
             position: "absolute",
             left: 0,
@@ -90,7 +92,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
           }}
         >
           <LocationnIcon />
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

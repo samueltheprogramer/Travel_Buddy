@@ -5,6 +5,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Auth, Destination, Home, LocationDetails, Profile } from "../screens";
 import CustomTabBar from "../navigations/CustomTabBar";
 import HappyJourny from "../screens/HappyJourny";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -47,24 +49,30 @@ const TabNavigator = () => {
 
 const App = () => {
   return (
-    <Stack.Navigator initialRouteName="Tabs">
-      <Stack.Screen
-        name="Tabs"
-        component={TabNavigator}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="LocationDetails"
-        component={LocationDetails}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="Auth" component={Auth} />
-      <Stack.Screen
-        name="HappyJourny"
-        component={HappyJourny}
-        options={{ headerShown: false }}
-      />
-    </Stack.Navigator>
+    <Provider store={store}>
+      <Stack.Navigator initialRouteName="Tabs">
+        <Stack.Screen
+          name="Tabs"
+          component={TabNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="LocationDetails"
+          component={LocationDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Auth"
+          component={Auth}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HappyJourny"
+          component={HappyJourny}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </Provider>
   );
 };
 
