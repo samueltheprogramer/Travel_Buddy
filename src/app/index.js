@@ -73,7 +73,7 @@ const App = () => {
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
+      <Toast ref={(ref) => Toast.setRef(ref)} visibilityTime={1000} />
     </Provider>
   );
 };

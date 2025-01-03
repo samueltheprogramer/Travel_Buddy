@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/appLogo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.samueltheprogramer.travel_buddy"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f8d6189c-390f-4eba-ad5e-543f15790ccb"
+      }
     }
   }
 }
