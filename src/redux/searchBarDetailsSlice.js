@@ -184,6 +184,22 @@ export const searchBarDetailsSlice = createSlice({
             }
           : location
       );
+      state.flilterdLocationDetails = state.flilterdLocationDetails.map(
+        (location) =>
+          location.location === locationName
+            ? {
+                ...location,
+                isFavourite: location?.isFavourite ? false : true,
+              }
+            : location
+      );
+      state.adLocationDetails =
+        state.adLocationDetails?.location === locationName
+          ? {
+              ...state.adLocationDetails,
+              isFavourite: state.adLocationDetails?.isFavourite ? false : true,
+            }
+          : state.adLocationDetails;
     },
     removeFavorite(state, action) {
       const locationName = action.payload;

@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BackArrowIcon, HeartIcon, ShareIcon } from "../../../assets/svg";
 import { COLORS, FONTS } from "../../constants";
 import { mvs, s } from "react-native-size-matters";
@@ -32,6 +32,7 @@ const BackHeader = ({ isProfileScreen = false }) => {
           : adLocationDetails.location
       )
     );
+    console.log("is Favorite", flilterdLocationDetails[0]?.isFavourite);
   };
 
   const handleSignOut = () => {
@@ -39,7 +40,7 @@ const BackHeader = ({ isProfileScreen = false }) => {
     navigation.replace("Auth");
   };
 
-  console.log("djvfjdvf", locationDetails);
+  console.log("Filterd location ----->", flilterdLocationDetails[0]);
   return (
     <View style={styles.headerContainer}>
       <TouchableOpacity
@@ -57,7 +58,15 @@ const BackHeader = ({ isProfileScreen = false }) => {
           <>
             <ShareIcon />
             <TouchableOpacity onPress={addFavourite}>
-              <HeartIcon fill={isToggle ? "red" : "white"} />
+              <HeartIcon
+                fill={
+                  flilterdLocationDetails[0]?.isFavourite ||
+                  (flilterdLocationDetails.length === 0 &&
+                    adLocationDetails?.isFavourite)
+                    ? "red"
+                    : "white"
+                }
+              />
             </TouchableOpacity>
           </>
         )}
