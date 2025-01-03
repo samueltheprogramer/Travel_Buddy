@@ -53,7 +53,7 @@ const Profile = () => {
         >
           <Image
             style={{ height: mvs(50), width: mvs(50), borderRadius: mvs(5) }}
-            source={{ uri: item.imageURL }}
+            source={{ uri: item.mainImage }}
           />
           <View>
             <Text>{item.location}</Text>
@@ -83,13 +83,15 @@ const Profile = () => {
         >
           <Image
             style={styles.profileImage}
-            source={{ uri: "https://picsum.photos/seed/picsum/500/500" }}
+            source={{
+              uri: "https://t3.ftcdn.net/jpg/10/58/16/08/240_F_1058160846_MxdSa2GeeVAF5A7Zt9X7Bp0dq0mlzeDe.jpg",
+            }}
           />
           <Text style={styles.detailsText} numberOfLines={1}>
-            <Text style={styles.boldText}>Name :</Text> Dravid
+            <Text style={styles.boldText}>Name :</Text> User001
           </Text>
           <Text style={styles.detailsText} numberOfLines={1}>
-            <Text style={styles.boldText}>Gmail :</Text> Dravid@gmail.com
+            <Text style={styles.boldText}>Gmail :</Text> User001@gmail.com
           </Text>
         </View>
       </View>

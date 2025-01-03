@@ -7,6 +7,7 @@ import { useNavigation } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleFavorite } from "../../redux/searchBarDetailsSlice";
 import { Ionicons } from "@expo/vector-icons";
+import { logout } from "../../redux/authSlice";
 
 const BackHeader = ({ isProfileScreen = false }) => {
   const [isToggle, setIsToggle] = useState(false);
@@ -32,6 +33,12 @@ const BackHeader = ({ isProfileScreen = false }) => {
       )
     );
   };
+
+  const handleSignOut = () => {
+    dispatch(logout());
+    navigation.replace("Auth");
+  };
+
   console.log("djvfjdvf", locationDetails);
   return (
     <View style={styles.headerContainer}>
@@ -43,7 +50,7 @@ const BackHeader = ({ isProfileScreen = false }) => {
       </TouchableOpacity>
       <View style={styles.heartAndShareIon}>
         {isProfileScreen ? (
-          <TouchableOpacity>
+          <TouchableOpacity onPress={handleSignOut}>
             <Text style={styles.signOutText}>Sign Out</Text>
           </TouchableOpacity>
         ) : (

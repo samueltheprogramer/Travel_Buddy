@@ -9,10 +9,12 @@ const HomeHeader = () => {
     <View style={styles.mainContainer}>
       <Image
         style={styles.userImage}
-        source={{ uri: "https://picsum.photos/seed/picsum/200/500" }}
+        source={{
+          uri: "https://t3.ftcdn.net/jpg/10/58/16/08/240_F_1058160846_MxdSa2GeeVAF5A7Zt9X7Bp0dq0mlzeDe.jpg",
+        }}
       />
       <Text numberOfLines={1} style={styles.headerText}>
-        Hello, Alpay
+        Hello, User001
       </Text>
       <View style={styles.notifivationIcon}>
         <BellIcon />

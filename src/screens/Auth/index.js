@@ -1,15 +1,71 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Button,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import { Container } from "../../components";
 import { COLORS, FONTS } from "../../constants";
 import { mvs, s } from "react-native-size-matters";
 import { GoogleIcon } from "../../../assets/svg";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
+import { useDispatch, useSelector } from "react-redux";
+import { login, logout } from "../../redux/authSlice";
 
 const Auth = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const userAuth = useSelector((state) => state.auth.userAuth);
   const [selectedTab, setSelectedTab] = useState(1);
+  const handleSignIn = () => {
+    console.log("Sign in with google");
+    navigation.replace("Tabs");
+    Toast.show({
+      type: "success",
+      text1: "Authentication Successful !",
+      text2:
+        selectedTab == 1
+          ? "You have successfully signed up."
+          : " You have successfully logged in.",
+    });
+    if (userAuth) {
+      dispatch(logout());
+    } else {
+      dispatch(login());
+    }
+  };
+  useEffect(() => {
+    Toast.show({
+      type: "info",
+      text1: "Authentication Required",
+      text2: "Please log in to continue.",
+    });
+  }, []);
+
+  useFocusEffect(() => {
+    if (userAuth) {
+      navigation.replace("Tabs");
+    }
+  }, [userAuth]);
+
+  console.log(userAuth);
+
   return (
     <Container style={styles.mainContainer}>
       <View style={styles.topContainer}>
+        <Image
+          style={{
+            height: mvs(50),
+            width: mvs(50),
+            //backgroundColor: "red",
+            marginTop: mvs(-30),
+          }}
+          source={require("../../../assets/images/appLogo.png")}
+        />
         <Text style={styles.appName}>Travel Buddy</Text>
       </View>
       <View style={styles.bottomContainer}>
@@ -42,7 +98,11 @@ const Auth = () => {
               </Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity activeOpacity={0.7} style={styles.inputField}>
+          <TouchableOpacity
+            onPress={handleSignIn}
+            activeOpacity={0.7}
+            style={styles.inputField}
+          >
             <View style={styles.googleIcon}>
               <GoogleIcon />
             </View>
@@ -99,6 +159,7 @@ const styles = StyleSheet.create({
     height: mvs(150),
     backgroundColor: COLORS.primary,
     justifyContent: "center",
+    alignItems: "center",
   },
   bottomContainer: {
     flex: 1,
@@ -114,7 +175,7 @@ const styles = StyleSheet.create({
     ...FONTS.h1,
     fontSize: mvs(30),
     textAlign: "center",
-    marginTop: mvs(-30),
+    // marginTop: mvs(-30),
   },
   tabContainer: {
     height: mvs(50),

@@ -5,8 +5,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Auth, Destination, Home, LocationDetails, Profile } from "../screens";
 import CustomTabBar from "../navigations/CustomTabBar";
 import HappyJourny from "../screens/HappyJourny";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { store } from "../redux/store";
+import Toast from "react-native-toast-message";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -50,7 +51,7 @@ const TabNavigator = () => {
 const App = () => {
   return (
     <Provider store={store}>
-      <Stack.Navigator initialRouteName="Tabs">
+      <Stack.Navigator initialRouteName={"Auth"}>
         <Stack.Screen
           name="Tabs"
           component={TabNavigator}
@@ -72,6 +73,7 @@ const App = () => {
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </Provider>
   );
 };

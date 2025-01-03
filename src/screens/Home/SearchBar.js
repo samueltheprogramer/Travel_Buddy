@@ -27,16 +27,33 @@ import {
 
 const SearchBar = () => {
   const dispatch = useDispatch();
-  const SD = useSelector((state) => state.searchBarDetails.startDate);
-  const ED = useSelector((state) => state.searchBarDetails.endDate);
+
   const [location, setLocation] = useState("");
   const [guestsNo, setGuestsNo] = useState(1);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
+  /*  const getFormattedDate = (date) => {
+    const options = { month: "short", day: "numeric" };
+    return date.toLocaleDateString(undefined, options);
+  }; */
+
+  const getFormattedDate = (date) => {
+    const options = { month: "short" }; // e.g., "Jan"
+    const month = date.toLocaleDateString(undefined, options);
+    const day = date.getDate().toString().padStart(2, "0"); // Ensure day is 2 digits
+    return `${month} ${day}`;
+  };
 
   const handleSearch = () => {
     dispatch(
-      setSearchDetails({ location, startDate: SD, endDate: ED, guestsNo })
+      setSearchDetails({
+        location,
+        guestsNo,
+        startDate: getFormattedDate(startDate),
+        endDate: getFormattedDate(endDate),
+      })
     );
-    console.log(location);
     dispatch(filterByLocationName(location));
   };
   return (
@@ -60,7 +77,10 @@ const SearchBar = () => {
           <View
             style={{ flexDirection: "row", gap: s(6), alignItems: "center" }}
           >
-            <DateTimePicker isStartDate={true} />
+            <DateTimePicker
+              value={startDate}
+              onChange={(event, date) => setStartDate(date)}
+            />
 
             <View
               style={{
@@ -69,7 +89,10 @@ const SearchBar = () => {
                 backgroundColor: "black",
               }}
             ></View>
-            <DateTimePicker isStartDate={false} />
+            <DateTimePicker
+              value={endDate}
+              onChange={(event, date) => setEndDate(date)}
+            />
           </View>
         </View>
       </View>
